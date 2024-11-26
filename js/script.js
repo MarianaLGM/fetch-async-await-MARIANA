@@ -3,30 +3,29 @@
 
 //2.pintar pokemons HTML
 
-//3. paginación
+//3. paginación- eventos botones
 
 /*4.Búsqueda de Pokémon por nombre. 
     -Si no exite deberá aparecer un mensaje de "pokemon no encontrado"
     -documentación de pokemon `https://pokeapi.co/docs/v2`*/
 
-/*BONUS Crea una segunda página donde se guarden tus pokemon favoritos.
+/*BONUS
    - Crea una segunda página donde se guarden tus pokemon favoritos.
    - Al clickar en un pokemon en index.html este tendrá que guardarse en localStorage y en la otra página saldrán esos pokemon que se han guardado previamente
    - Cada pokemon, si se ha añadido a favoritos `localStorage`, tendrá que tener una marca como que ya está añadido. Si se vuelve a clickar desaparcera la marca y de favoritos `localStorage`
    - Puedes usar un script nuevo que solo traiga esos pokemon de favoritos*/
 
 const searchBtn= document.getElementById("searchBtn"); //buscador pokémons
-
 const resetBtn= document.getElementById("resetBtn");//resetear
-const app= document.getElementById("app");//listado pokemon
+
 
 
 
 //1.
 function pokemons (){
-    //const characterList=document.getElementById ("character-list");
+    const app= document.getElementById("app");//listado pokemon
     app.innerHTML=""
-    fetch("https://pokeapi.co/api/v2/pokemon?offset=10&limit=10")
+    fetch("https://pokeapi.co/api/v2/pokemon?offset=0&limit=10")
       .then((response)=>response.json()) //respuesta del servidor 
       .then((data)=>{
         console.log(data)//OK
@@ -38,14 +37,13 @@ function pokemons (){
         newPokeContenedor.classList.add ("nuevoDiv")
         //añado imagen y name
         newPokeContenedor.innerHTML= `  
-         <img src="${elements.url[
-            0]}" alt="${elements.name}" id="pokemon"/>
+         <img  alt="${elements.name}" id="pokemon" src="${elements.url[0]}"/> 
          <h3>${elements.name}</h3>
        `; 
        app.appendChild(newPokeContenedor);
       });
     })
-    
+ 
 }
 
 pokemons();//OK
@@ -54,14 +52,12 @@ pokemons();//OK
 
 //3.
 
-//paginación
 const prevBtn= document.getElementById("prevBtn");//pág. anterior
 const nextBtn= document.getElementById("nextBtn");//pág. siguiente
 
-let paginaActual=1;
+let paginaActual=0;
 
-	// Incrementar "paginaActual"
-function avanzarPagina() {
+function avanzarPagina() {// Incrementar "paginaActual"
 	paginaActual = paginaActual + 1;
 }
    
@@ -74,10 +70,7 @@ function retrocederPagina() {   // Disminuye "paginaActual"
     }
     
 }
-    prevBtn.addEventListener("click", retrocederPagina);
-    nextBtn.addEventListener("click", avanzarPagina);
-
-  //.catch (error) maneja el error
-  //.finaly
+prevBtn.addEventListener("click", retrocederPagina);
+nextBtn.addEventListener("click", avanzarPagina);
 
   
